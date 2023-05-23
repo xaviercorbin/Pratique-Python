@@ -14,7 +14,7 @@ root.title('My To Do List')
 
 # Test
 # Section pour le frame (par dessus le root, pour essayer de faire plus moderne)
-frame = customtkinter.CTkFrame(master=root)
+frame = customtkinter.CTkFrame(master=root, corner_radius=60)
 frame.pack(pady=20, padx=40, fill='both', expand=True)
 
 
@@ -25,15 +25,15 @@ if os.path.isfile('tasks.pkl'):
 else:
     tasks = []
 
-task_listbox = Listbox(frame, bg='lightgrey', font=(
-    'Arial', 20), width=45, height=25)
+task_listbox = Listbox(frame, bg='black', font=(
+    'Arial', 20), width=50, height=25)
 for task in tasks:
     task_listbox.insert(END, task)
-task_listbox.pack(padx=10, pady=10)
+task_listbox.pack(padx=5, pady=15)
 
 
 # Interface pour ajouter une tâche
-# Variable Globale
+# Variables Globales
 entry_add_task = None
 add_task_window = None
 
@@ -44,6 +44,8 @@ def open_add_task():
     add_task_window = Toplevel(root)
     add_task_window.title('Ajouter une tâche')
     add_task_window.geometry('800x50')
+    add_task_window.configure(bg='white')
+    add_task_window.resizable(False, False)
 
     # Créer le entry
     entry_add_task = customtkinter.CTkEntry(master=add_task_window)
@@ -88,14 +90,12 @@ def close_program(event=None):
 
 
 # Créer un bouton pour ouvrir une interface pour ajouter une tâche
-add_task_button = Button(frame, text='Ajouter une tâche', bg='lightgrey', font=(
-    'Arial', 20), width=25, height=3, command=open_add_task)
-add_task_button.pack(padx=5, pady=5)
+add_task_button = customtkinter.CTkButton(master=frame, text='Ajouter une tâche', font=('Arial', 18), width=300, height=50, command=open_add_task)
+add_task_button.pack(padx=3, pady=3)
 
-# Bouton pour suprimer une tâche
-button_remove_task = Button(
-    root, text="Remove Task", font=("Arial", 16), command=remove_task)
-button_remove_task.pack(padx=5, pady=5)
+customtkinter.set_default_color_theme('green')
+button_remove_task = customtkinter.CTkButton(master=frame, text='Enlever une tâche', font=('Arial', 16), width=200, height=50, command=remove_task)
+button_remove_task.pack(padx=5, pady=15)
 
 # Associer la touche escape pour femrer le programe
 root.bind('<Escape>', close_program)
