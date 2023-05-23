@@ -18,6 +18,7 @@ mainroot = customtkinter.CTk()
 screen_width = mainroot.winfo_screenwidth()
 screen_height = mainroot.winfo_screenheight()
 
+# Pour essayer de centrer la fenêtre au centre
 x = int(screen_width/2 - 500/2)
 y = int(screen_height/2 - 350/2)
 mainroot.geometry(f"500x400+{x}+{y}")
