@@ -10,6 +10,8 @@ import openpyxl
 import pandas as pd
 import yfinance as yf
 
+# Beaucoup de import, mais je compte les utiliser pour des futurs trucs. Par contre, je pense qu'ils en a des inutiles qui se répètent
+
 customtkinter.set_appearance_mode('system')
 customtkinter.set_default_color_theme('dark-blue')
 mainroot = customtkinter.CTk()
