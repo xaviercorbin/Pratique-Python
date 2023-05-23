@@ -132,7 +132,7 @@ def historic_prices():
         # set the height of the treeviw to show more rows
         historic_prices_tree['height'] = 20
 
-        def export_to_excel(tree):
+        def export_to_excel(historic_prices_tree):
             wb = openpyxl.Workbook()
             ws = wb.active
 
@@ -181,15 +181,96 @@ def historic_prices():
     frame_historic_prices.mainloop()
 
 
+def calculation_of_shares_to_buy():
+    print('Calculation of shares to buy selected')
+
+    '''
+    - find the stock you want to buy
+    - retreive its price per shares
+    - input budget
+    - input commissions
+    - ...
+    '''
+
+
+def building_a_portfolio():
+    print('Building a portfolio was selected')
+    '''
+    - Select new portfolio or previoulsy made
+    
+    - Forms
+        - input cash
+        - input propotion of each type of securities
+            - Bonds
+            - CAN stocks
+            - US stocks
+            - INT stocks
+            - Alternatives
+            - Cash
+            - Fixed income
+        - input target volatility
+        - input target beta
+        - input risk-free rate, and tresury yield
+        - input age
+        - input target retirement age
+        - input needs of cash
+        - input horizon
+        - ...
+        
+        *
+        - stock that would automatically be selected
+            - select strategy
+                - dividend
+                - Growth
+                - value
+                - low vol
+        - stock picked by us
+        *
+    
+    - Calculations
+        - each stock volatility, beta, ...
+        - portfolio expected return
+        - portfolio volatility
+        - portfolio beta
+        - *stock finder
+        - ...
+        
+    - Output 
+        - proportion for each type of security
+        - proportion of each stocks to be invested
+        - total cash used and total remaining
+        - portfolio return
+        - portfolio volatility
+        - portfolio beta
+        - graph
+        - ...
+    
+    - make it possible to set the starting date, to keep track of the investments
+    - try to implement simulations 
+    - ...
+    
+    '''
+
+
 mainframe = customtkinter.CTkFrame(master=mainroot)
+mainframe._corner_radius = 40
 mainframe.pack(pady=20, padx=60, fill='both', expand=True)
 
 title_mainframe = customtkinter.CTkLabel(
-    master=mainframe, text='Financial Tools', font=('Arial', 24))
+    master=mainframe, text='Financial Tools', font=('Arial', 28))
 title_mainframe.pack(pady=12, padx=10)
 
 button_historic_price = customtkinter.CTkButton(
-    master=mainframe, text='Historic Prices', command=historic_prices)
+    master=mainframe, text='Historic prices', command=historic_prices)
 button_historic_price.pack(pady=12, padx=10)
+
+button_building_portfolio = customtkinter.CTkButton(
+    master=mainframe, text='Building your portfolio (soon)', command=building_a_portfolio)
+button_building_portfolio.pack(pady=12, padx=10)
+
+button_calculation_of_shares_to_buy = customtkinter.CTkButton(
+    master=mainframe, text='Calcul the number of share to buy (soon)', command=calculation_of_shares_to_buy)
+button_calculation_of_shares_to_buy.pack(pady=12, padx=10)
+
 
 mainroot.mainloop()
