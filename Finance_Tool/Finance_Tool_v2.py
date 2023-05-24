@@ -203,6 +203,8 @@ def building_a_portfolio():
     def building_new_portfolio():
         print('------Building a new portfolio was selected------')
         
+        #Forms pour avoir les détails du user nécessaire à la construction du portefeuille
+        
     
     def view_existent_portfolio():
         print('------View existent portfolio was selected------')
