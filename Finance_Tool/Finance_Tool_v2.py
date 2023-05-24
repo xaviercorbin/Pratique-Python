@@ -2,7 +2,6 @@ import os
 import sqlite3
 import tkinter as tk
 import tkinter.ttk as ttk
-from tkinter import *
 from tkinter import filedialog, messagebox, ttk
 
 import customtkinter
@@ -199,23 +198,83 @@ def building_a_portfolio():
     frame_building_a_portfolio_0.geometry('200x100')
     frame_building_a_portfolio_0.title('Building your portfolio')
     customtkinter.set_default_color_theme('dark-blue')
-    
+
     def building_new_portfolio():
         print('------Building a new portfolio was selected------')
+
+        # Forms pour avoir les détails du user nécessaire à la construction du portefeuille
+        class Form():  
+            frame_building_new_portfolio = customtkinter.CTk()
+            frame_building_new_portfolio.geometry('550x300')
+            frame_building_new_portfolio.title('Investment Policie')
+            
+            font1 = ('Arial', 16)
+            volatility_variable = ['Low volatility', 'Medium volatility', 'High volatility']
+            
+            volatility_var = customtkinter.StringVar(value='Low volatility')
+            
+            def volatility_options(choice):
+                volatility_choice_textbox.delete(1.0, END)
+                if choice == 'Low volatility':
+                    volatility_choice_textbox.insert(END, 'Low volatility')
+                if choice == 'Medium volatility':
+                    volatility_choice_textbox.insert(END, 'Medium volatility')
+                elif choice == 'High volatility':
+                    volatility_choice_textbox.insert(END, 'High volatility')
+            
+            
+            def summit_form_button():
+                print('------summit form button was pressed------')
+                
+            
+            
+            # Money
+            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='How much money you want to invest : ', font=font1).grid(column=0, row=0)
+            input_money = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200).grid(column=1, row=0)
+            
+            # Volatility
+            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your target volatility : ', font=font1).grid(column=0, row=1)
+            menu_volatility_choice = customtkinter.CTkOptionMenu(master=frame_building_new_portfolio, values=volatility_variable, command=volatility_options, variable=volatility_var).grid(column=1, row=1)
+            volatility_choice_textbox = customtkinter.CTkTextbox(master=frame_building_new_portfolio, width=100, height=20).grid(column=3, row=1)
+            
+            # Beta
+            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='Which beta are you looking for : ', font=font1).grid(column=0, row=2)
+            input_beta = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200).grid(column=1, row=2)
+            
+            # Age
+            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your age? : ', font=font1).grid(column=0, row=3)
+            input_age = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200).grid(column=1, row=3)
+            
+            # Retirement horizon
+            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your retirement horizon? : ', font=font1).grid(column=0, row=4)
+            input_retirement_horizon = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200).grid(column=1, row=4)
+            
+            # Investment horizon
+            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your investment horizon? : ', font=font1).grid(column=0, row=5)
+            input_investment_horizon = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200).grid(column=1, row=5)
+            
+            # Need of money right now
+            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='How much money do you need right now? : ', font=font1).grid(column=0, row=6)
+            input_need_money = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200).grid(column=1, row=6)
+            
+            # Summit Button
+            customtkinter.CTkButton(master=frame_building_new_portfolio, text='Summit', command=summit_form_button).grid(column=0, row=9)
+            
+            frame_building_new_portfolio.mainloop()
         
-        #Forms pour avoir les détails du user nécessaire à la construction du portefeuille
         
-    
+
     def view_existent_portfolio():
         print('------View existent portfolio was selected------')
-    
-    button__new_portfolio = customtkinter.CTkButton(master=frame_building_a_portfolio_0, text='New Portfolio', command=building_new_portfolio)
+
+    button__new_portfolio = customtkinter.CTkButton(
+        master=frame_building_a_portfolio_0, text='New Portfolio', command=building_new_portfolio)
     button__new_portfolio.pack(pady=10, padx=10)
-    
-    button_existent_portfolio = customtkinter.CTkButton(master=frame_building_a_portfolio_0, text='Existent portfolio', command=view_existent_portfolio)
+
+    button_existent_portfolio = customtkinter.CTkButton(
+        master=frame_building_a_portfolio_0, text='Existent portfolio', command=view_existent_portfolio)
     button_existent_portfolio.pack(pady=10, padx=10)
-    
-    
+
     '''
     - Select new portfolio or previoulsy made
     
