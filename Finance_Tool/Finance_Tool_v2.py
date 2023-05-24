@@ -26,7 +26,7 @@ mainroot.title("Selection of Tools")
 
 
 def historic_prices():
-    print("User have selected : Historic Price")
+    print("------User have selected : Historic Price------")
     frame_historic_prices = customtkinter.CTk()
     frame_historic_prices.title('Historic Price')
     frame_historic_prices.geometry("600x200")
@@ -182,7 +182,7 @@ def historic_prices():
 
 
 def calculation_of_shares_to_buy():
-    print('Calculation of shares to buy selected')
+    print('------alculation of shares to buy selected------')
 
     '''
     - find the stock you want to buy
@@ -195,6 +195,25 @@ def calculation_of_shares_to_buy():
 
 def building_a_portfolio():
     print('Building a portfolio was selected')
+    frame_building_a_portfolio_0 = customtkinter.CTk()
+    frame_building_a_portfolio_0.geometry('200x100')
+    frame_building_a_portfolio_0.title('Building your portfolio')
+    customtkinter.set_default_color_theme('dark-blue')
+    
+    def building_new_portfolio():
+        print('------Building a new portfolio was selected------')
+        
+    
+    def view_existent_portfolio():
+        print('------View existent portfolio was selected------')
+    
+    button__new_portfolio = customtkinter.CTkButton(master=frame_building_a_portfolio_0, text='New Portfolio', command=building_new_portfolio)
+    button__new_portfolio.pack(pady=10, padx=10)
+    
+    button_existent_portfolio = customtkinter.CTkButton(master=frame_building_a_portfolio_0, text='Existent portfolio', command=view_existent_portfolio)
+    button_existent_portfolio.pack(pady=10, padx=10)
+    
+    
     '''
     - Select new portfolio or previoulsy made
     
