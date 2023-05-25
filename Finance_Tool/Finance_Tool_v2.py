@@ -228,16 +228,16 @@ def building_a_portfolio():
                     volatility_selected = 'High volatility'
             
             
-            def submit_form_button():
+            def submit_form_button(name_input, input_money, input_beta, input_age, input_investment_horizon, input_need_money):
                 print('------summit form button was pressed------')
                 name = name_input.get()
-                money = money_input.get()
+                money = input_money.get()
                 volatility = volatility_selected
-                beta = beta_input.get()
-                age = age_input.get()
+                beta = input_beta.get()
+                age = input_age.get()
                 retirement_horizon = 120-age
-                investment_horizon = investment_horizon_input.get()
-                need_money = need_money_input.get()
+                investment_horizon = input_investment_horizon.get()
+                need_money = input_need_money.get()
                 print(name, money, volatility, beta, age, retirement_horizon, investment_horizon, need_money)
                 
                 paramètre = [name, money, volatility, beta, age, retirement_horizon, investment_horizon, need_money]
