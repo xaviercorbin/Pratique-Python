@@ -196,6 +196,8 @@ def new_statement_policy_made():
     print('new statement policy made')
     
     
+    
+    
 
 
 def building_a_portfolio():
