@@ -201,99 +201,94 @@ def building_a_portfolio():
 
     def building_new_portfolio():
         print('------Building a new portfolio was selected------')
-
-        # Forms pour avoir les détails du user nécessaire à la construction du portefeuille
-        class Form():  
-            frame_building_new_portfolio = customtkinter.CTk()
-            frame_building_new_portfolio.geometry('550x300')
-            frame_building_new_portfolio.title('Investment Policie')
+        # Forms pour avoir les détails du user nécessaire à la construction du portefeuille  
+        frame_building_new_portfolio = customtkinter.CTk()
+        frame_building_new_portfolio.geometry('550x300')
+        frame_building_new_portfolio.title('Investment Policie')
             
+        # Font for the form
+        font1 = ('Arial', 16)
             
-            # Font for the form
-            font1 = ('Arial', 16)
-            
-            # Volatility choice
-            volatility_variable = ['Low volatility', 'Medium volatility', 'High volatility']
-            volatility_selected = None
-            volatility_var = customtkinter.StringVar(value='Low volatility')
-            
+        # Volatility choice
+        volatility_variable = ['Low volatility', 'Medium volatility', 'High volatility']
+        volatility_var = customtkinter.StringVar(value='Low volatility')
+        volatility_selected = ''
   
-            def volatility_options(choice):
-                global volatility_selected
-                if choice == 'Low volatility':
-                    volatility_selected = 'Low volatility'
-                if choice == 'Medium volatility':
-                    volatility_selected = 'Medium volatility'
-                elif choice == 'High volatility':
-                    volatility_selected = 'High volatility'
+        def volatility_options(choice):
+            global volatility_selected
+            if choice == 'Low volatility':
+                volatility_selected = 'Low volatility'
+            if choice == 'Medium volatility':
+                volatility_selected = 'Medium volatility'
+            elif choice == 'High volatility':
+                volatility_selected = 'High volatility'
             
             
-            def submit_form_button(name_input, input_money, input_beta, input_age, input_investment_horizon, input_need_money):
-                print('------summit form button was pressed------')
-                name = name_input.get()
-                money = input_money.get()
-                volatility = volatility_selected
-                beta = input_beta.get()
-                age = input_age.get()
-                retirement_horizon = 120-age
-                investment_horizon = input_investment_horizon.get()
-                need_money = input_need_money.get()
-                print(name, money, volatility, beta, age, retirement_horizon, investment_horizon, need_money)
+        def submit_form_button():
+            print('------summit form button was pressed------')
+            name = name_input.get()
+            money = input_money.get()
+            volatility = volatility_selected
+            beta = input_beta.get()
+            age = input_age.get()
+            investment_horizon = input_investment_horizon.get()
+            need_money = input_need_money.get()
+            print(name, money, volatility, beta, age, investment_horizon, need_money)
                 
-                paramètre = [name, money, volatility, beta, age, retirement_horizon, investment_horizon, need_money]
+            paramètre = [name, money, volatility, beta, age, investment_horizon, need_money]
                 
-                if paramètre:
-                    conn = sqlite3.connect('users.db')
-                    c = conn.cursor()
+            if paramètre:
+                conn = sqlite3.connect('users.db')
+                c = conn.cursor()
                     
-                    c.execute('''CREATE TABLE IF NOT EXISTS User_Investment_Policie_Statement(name TEXT, money_to_invest TEXT, target_volatility TEXT, beta TEXT, age TEXT, retirement_horizon TEXT, investment_horizon TEXT, money_needed TEXT)''')
+                c.execute('''CREATE TABLE IF NOT EXISTS User_Investment_Policy_Statement(name TEXT, money_to_invest TEXT, target_volatility TEXT, beta TEXT, age TEXT, investment_horizon TEXT, money_needed TEXT)''')
                     
-                    c.execute("INSERT INTO User_Ivestment_Policie_Statement VALUES (?,?,?,?,?,?,?,?)",(name, money,volatility, beta, age, retirement_horizon, investment_horizon, need_money))
-                    conn.commit()
-                    conn.close()
-                else:
-                    print('Please fill the form')            
+                c.execute("INSERT INTO User_Investment_Policy_Statement VALUES (?,?,?,?,?,?,?)",(name, money,volatility, beta, age, investment_horizon, need_money))
+                conn.commit()
+                conn.close()
+            else:
+                print('Please fill the form')            
             
             
-            # Name
-            name_label = customtkinter.CTkLabel(master=frame_building_new_portfolio, text='Name', font=font1).grid(column=0, row=0)
-            name_input = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
-            name_input.grid(column=1, row=0)
+        # Name
+        name_label = customtkinter.CTkLabel(master=frame_building_new_portfolio, text='Name', font=font1).grid(column=0, row=0)
+        name_input = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
+        name_input.grid(column=1, row=0)
             
-            # Money
-            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='How much money you want to invest : ', font=font1).grid(column=0, row=1)
-            input_money = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
-            input_money.grid(column=1, row=1)
+        # Money
+        customtkinter.CTkLabel(master=frame_building_new_portfolio, text='How much money you want to invest : ', font=font1).grid(column=0, row=1)
+        input_money = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
+        input_money.grid(column=1, row=1)
             
-            # Volatility
-            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your target volatility : ', font=font1).grid(column=0, row=2)           
-            menu_volatility_choice = customtkinter.CTkOptionMenu(master=frame_building_new_portfolio, values=volatility_variable, command=volatility_options, variable=volatility_var)
-            menu_volatility_choice.grid(column=1, row=2)
+        # Volatility
+        customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your target volatility : ', font=font1).grid(column=0, row=2)           
+        menu_volatility_choice = customtkinter.CTkOptionMenu(master=frame_building_new_portfolio, values=volatility_variable, command=volatility_options, variable=volatility_var)
+        menu_volatility_choice.grid(column=1, row=2)
             
-            # Beta
-            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='Which beta are you looking for : ', font=font1).grid(column=0, row=3)
-            input_beta = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
-            input_beta.grid(column=1, row=3)
+        # Beta
+        customtkinter.CTkLabel(master=frame_building_new_portfolio, text='Which beta are you looking for : ', font=font1).grid(column=0, row=3)
+        input_beta = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
+        input_beta.grid(column=1, row=3)
             
-            # Age
-            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your age? : ', font=font1).grid(column=0, row=4)
-            input_age = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
-            input_age.grid(column=1, row=4)
+        # Age
+        customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your age? : ', font=font1).grid(column=0, row=4)
+        input_age = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
+        input_age.grid(column=1, row=4)
             
-            # Investment horizon
-            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your investment horizon? : ', font=font1).grid(column=0, row=5)
-            input_investment_horizon = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
-            input_investment_horizon.grid(column=1, row=5)
+        # Investment horizon
+        customtkinter.CTkLabel(master=frame_building_new_portfolio, text='What is your investment horizon? : ', font=font1).grid(column=0, row=5)
+        input_investment_horizon = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
+        input_investment_horizon.grid(column=1, row=5)
             
-            # Need of money right now
-            customtkinter.CTkLabel(master=frame_building_new_portfolio, text='How much money do you need right now? : ', font=font1).grid(column=0, row=6)
-            input_need_money = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
-            input_need_money.grid(column=1, row=6)
+        # Need of money right now
+        customtkinter.CTkLabel(master=frame_building_new_portfolio, text='How much money do you need right now? : ', font=font1).grid(column=0, row=6)
+        input_need_money = customtkinter.CTkEntry(master=frame_building_new_portfolio, width=200)
+        input_need_money.grid(column=1, row=6)
             
-            # Submit Button
-            customtkinter.CTkButton(master=frame_building_new_portfolio, text='Summit', command=submit_form_button).grid(column=0, row=9)            
+        # Submit Button
+        customtkinter.CTkButton(master=frame_building_new_portfolio, text='Summit', command=submit_form_button).grid(column=0, row=9)            
 
-            frame_building_new_portfolio.mainloop()
+        frame_building_new_portfolio.mainloop()
         
         
 
