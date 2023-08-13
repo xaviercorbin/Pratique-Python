@@ -255,12 +255,16 @@ def building_a_portfolio():
                 conn = sqlite3.connect('users.db')
                 c = conn.cursor()
 
-                c.execute('''CREATE TABLE IF NOT EXISTS User_Investment_Policy_Statement(name TEXT, money_to_invest TEXT, target_volatility TEXT, beta TEXT, age TEXT, investment_horizon TEXT, money_needed TEXT)''')
+                # Creating the table with new fields
+                c.execute('''CREATE TABLE IF NOT EXISTS Retirement_Plan (Last_Name TEXT, Name TEXT, Age TEXT, YBR TEXT, MI TEXT, ME TEXT, Inv_Value TEXT)''')
 
-                c.execute("INSERT INTO User_Investment_Policy_Statement VALUES (?,?,?,?,?,?,?)",
-                          (name, money, volatility, beta, age, investment_horizon, need_money))
+                # Inserting values into the table
+                c.execute("INSERT INTO Retirement_Plan VALUES (?,?,?,?,?,?,?)",
+                        (last_name_input.get(), name_input.get(), age_input.get(), retirement_input.get(), income_input.get(), expenses_input.get(), investments_input.get()))
+
                 conn.commit()
                 conn.close()
+
                 frame_building_new_portfolio.destroy()
                 frame_building_a_portfolio_0.destroy()
 
@@ -272,7 +276,7 @@ def building_a_portfolio():
                 # Faire la messagebox qui retourne après au investment policy
                 #######################################################################################################
 
-        # Name
+        '''# Name
         name_label = customtkinter.CTkLabel(
             master=frame_building_new_portfolio, text='Name', font=font1).grid(column=0, row=0)
         name_input = customtkinter.CTkEntry(
@@ -324,6 +328,61 @@ def building_a_portfolio():
         # Submit Button
         customtkinter.CTkButton(master=frame_building_new_portfolio,
                                 text='Summit', command=submit_form_button).grid(column=0, row=9)
+'''
+        # Last Name
+        last_name_label = customtkinter.CTkLabel(
+            master=frame_building_new_portfolio, text='Last Name', font=font1).grid(column=0, row=0)
+        last_name_input = customtkinter.CTkEntry(
+            master=frame_building_new_portfolio, width=200)
+        last_name_input.grid(column=1, row=0)
+
+        # Name
+        name_label = customtkinter.CTkLabel(
+            master=frame_building_new_portfolio, text='Name', font=font1).grid(column=0, row=1)
+        name_input = customtkinter.CTkEntry(
+            master=frame_building_new_portfolio, width=200)
+        name_input.grid(column=1, row=1)
+
+        # Age
+        age_label = customtkinter.CTkLabel(
+            master=frame_building_new_portfolio, text='Age', font=font1).grid(column=0, row=2)
+        age_input = customtkinter.CTkEntry(
+            master=frame_building_new_portfolio, width=200)
+        age_input.grid(column=1, row=2)
+
+        # Years before retirement
+        retirement_label = customtkinter.CTkLabel(
+            master=frame_building_new_portfolio, text='How many years before retirement', font=font1).grid(column=0, row=3)
+        retirement_input = customtkinter.CTkEntry(
+            master=frame_building_new_portfolio, width=200)
+        retirement_input.grid(column=1, row=3)
+
+        # Monthly Income
+        income_label = customtkinter.CTkLabel(
+            master=frame_building_new_portfolio, text='Monthly Income', font=font1).grid(column=0, row=4)
+        income_input = customtkinter.CTkEntry(
+            master=frame_building_new_portfolio, width=200)
+        income_input.grid(column=1, row=4)
+
+        # Monthly Expenses
+        expenses_label = customtkinter.CTkLabel(
+            master=frame_building_new_portfolio, text='Monthly Expenses', font=font1).grid(column=0, row=5)
+        expenses_input = customtkinter.CTkEntry(
+            master=frame_building_new_portfolio, width=200)
+        expenses_input.grid(column=1, row=5)
+
+        # Value of total investments
+        investments_label = customtkinter.CTkLabel(
+            master=frame_building_new_portfolio, text='Value of total investments', font=font1).grid(column=0, row=6)
+        investments_input = customtkinter.CTkEntry(
+            master=frame_building_new_portfolio, width=200)
+        investments_input.grid(column=1, row=6)
+
+        # Submit Button
+        customtkinter.CTkButton(master=frame_building_new_portfolio,
+                                text='Submit', command=submit_form_button).grid(column=0, row=8)
+
+
 
         frame_building_new_portfolio.mainloop()
 
