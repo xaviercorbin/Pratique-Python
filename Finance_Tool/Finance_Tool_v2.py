@@ -193,8 +193,13 @@ def calculation_of_shares_to_buy():
 
 
 def new_statement_policy_made():
-    print('new statement policy made')
+    print('------New statement policy made------')
+    frame_new_statement_policy_made = customtkinter.CTk()
+    frame_new_statement_policy_made.geometry("800x70")
+    frame_new_statement_policy_made.title('Statement Policy')
+    customtkinter.set_default_color_theme('green')
     
+    frame_new_statement_policy_made.mainloop()
     
     
     
@@ -217,46 +222,33 @@ def building_a_portfolio():
         # Font for the form
         font1 = ('Arial', 16)
 
-        # Volatility choice
-        volatility_variable = ['Low volatility',
-                               'Medium volatility', 'High volatility']
-        volatility_var = customtkinter.StringVar(value='Low volatility')
-
-        #######################################################################################################
-        # J'arrive pas à faire marcher ça, de prendre la volatilité sélectionnée dans le option menu
-        #######################################################################################################
-        volatility_selected = ''
-
-        def volatility_options(choice):
-            global volatility_selected
-            if choice == 'Low volatility':
-                volatility_selected = 'Low volatility'
-            if choice == 'Medium volatility':
-                volatility_selected = 'Medium volatility'
-            elif choice == 'High volatility':
-                volatility_selected = 'High volatility'
-
         def submit_form_button():
             print('------summit form button was pressed------')
-            name = name_input.get()
-            money = input_money.get()
-            volatility = volatility_selected
-            beta = input_beta.get()
-            age = input_age.get()
-            investment_horizon = input_investment_horizon.get()
-            need_money = input_need_money.get()
-            print(name, money, volatility, beta, age,
-                  investment_horizon, need_money)
+            Last_Name = last_name_input.get()
+            Name = name_input.get()
+            Age = age_input.get()
+            Years_Before_Retirement = retirement_input.get()
+            Monthly_Icome = income_input.get()
+            Monthly_Expenses = expenses_input.get()
+            Total_Investment = investments_input.get()
+            print(Last_Name, Name, Age, Years_Before_Retirement, Monthly_Icome, Monthly_Expenses, Total_Investment)
 
-            paramètre = [name, money, volatility, beta,
-                         age, investment_horizon, need_money]
+            paramètre = [Last_Name, Name, Age, Years_Before_Retirement, Monthly_Icome, Monthly_Expenses, Total_Investment]
 
             if all(paramètre):
                 conn = sqlite3.connect('users.db')
                 c = conn.cursor()
 
                 # Creating the table with new fields
-                c.execute('''CREATE TABLE IF NOT EXISTS Retirement_Plan (Last_Name TEXT, Name TEXT, Age TEXT, YBR TEXT, MI TEXT, ME TEXT, Inv_Value TEXT)''')
+                c.execute('''CREATE TABLE IF NOT EXISTS Retirement_Plan (
+                    Last_Name TEXT, 
+                    Name TEXT, 
+                    Age TEXT, 
+                    Years_Before_Retirement TEXT, 
+                    Monthly_Income TEXT, 
+                    Monthly_Expenses TEXT, 
+                    Total_Investments_Value TEXT
+                )''')
 
                 # Inserting values into the table
                 c.execute("INSERT INTO Retirement_Plan VALUES (?,?,?,?,?,?,?)",
@@ -276,59 +268,7 @@ def building_a_portfolio():
                 # Faire la messagebox qui retourne après au investment policy
                 #######################################################################################################
 
-        '''# Name
-        name_label = customtkinter.CTkLabel(
-            master=frame_building_new_portfolio, text='Name', font=font1).grid(column=0, row=0)
-        name_input = customtkinter.CTkEntry(
-            master=frame_building_new_portfolio, width=200)
-        name_input.grid(column=1, row=0)
 
-        # Money
-        customtkinter.CTkLabel(master=frame_building_new_portfolio,
-                               text='How much money you want to invest : ', font=font1).grid(column=0, row=1)
-        input_money = customtkinter.CTkEntry(
-            master=frame_building_new_portfolio, width=200)
-        input_money.grid(column=1, row=1)
-
-        # Volatility
-        customtkinter.CTkLabel(master=frame_building_new_portfolio,
-                               text='What is your target volatility : ', font=font1).grid(column=0, row=2)
-        menu_volatility_choice = customtkinter.CTkOptionMenu(
-            master=frame_building_new_portfolio, values=volatility_variable, command=volatility_options, variable=volatility_var)
-        menu_volatility_choice.grid(column=1, row=2)
-
-        # Beta
-        customtkinter.CTkLabel(master=frame_building_new_portfolio,
-                               text='Which beta are you looking for : ', font=font1).grid(column=0, row=3)
-        input_beta = customtkinter.CTkEntry(
-            master=frame_building_new_portfolio, width=200)
-        input_beta.grid(column=1, row=3)
-
-        # Age
-        customtkinter.CTkLabel(master=frame_building_new_portfolio,
-                               text='What is your age? : ', font=font1).grid(column=0, row=4)
-        input_age = customtkinter.CTkEntry(
-            master=frame_building_new_portfolio, width=200)
-        input_age.grid(column=1, row=4)
-
-        # Investment horizon
-        customtkinter.CTkLabel(master=frame_building_new_portfolio,
-                               text='What is your investment horizon? : ', font=font1).grid(column=0, row=5)
-        input_investment_horizon = customtkinter.CTkEntry(
-            master=frame_building_new_portfolio, width=200)
-        input_investment_horizon.grid(column=1, row=5)
-
-        # Need of money right now
-        customtkinter.CTkLabel(master=frame_building_new_portfolio,
-                               text='How much money do you need right now? : ', font=font1).grid(column=0, row=6)
-        input_need_money = customtkinter.CTkEntry(
-            master=frame_building_new_portfolio, width=200)
-        input_need_money.grid(column=1, row=6)
-
-        # Submit Button
-        customtkinter.CTkButton(master=frame_building_new_portfolio,
-                                text='Summit', command=submit_form_button).grid(column=0, row=9)
-'''
         # Last Name
         last_name_label = customtkinter.CTkLabel(
             master=frame_building_new_portfolio, text='Last Name', font=font1).grid(column=0, row=0)
@@ -388,6 +328,128 @@ def building_a_portfolio():
 
     def view_existent_portfolio():
         print('------View existent portfolio was selected------')
+        
+        frame_view_existent_portfolio = customtkinter.CTk()
+        frame_view_existent_portfolio.geometry('300x200')
+        frame_view_existent_portfolio.title('View Existent Portfolio')
+
+        def view_statement_policy():
+            print("Statement Policy selected")
+
+            # Create a window to display list of names
+            frame_view_names = customtkinter.CTk()
+            frame_view_names.geometry('300x400')
+            frame_view_names.title('Select a Person')
+
+            # Retrieve names from the database
+            conn = sqlite3.connect('users.db')
+            c = conn.cursor()
+            c.execute("SELECT Last_Name, Name FROM Retirement_Plan")
+            names = c.fetchall()
+            conn.close()
+
+            # Create a listbox to display names
+            names_listbox = tk.Listbox(master=frame_view_names)
+            for last, first in names:
+                names_listbox.insert('end', f"{last}, {first}")
+            names_listbox.pack(pady=10, padx=10, fill='both', expand=True)
+
+            def on_name_selected(event):
+                index = names_listbox.curselection()[0]
+                last_name, name = names[index]
+
+                # Retrieve full details of selected person from the database
+                conn = sqlite3.connect('users.db')
+                c = conn.cursor()
+                c.execute("SELECT * FROM Retirement_Plan WHERE Last_Name=? AND Name=?", (last_name, name))
+                person_details = c.fetchone()
+                conn.close()
+
+                # Create a window to display details
+                frame_details = customtkinter.CTk()
+                frame_details.geometry('500x300')
+                frame_details.title(f"{last_name}, {name}'s Details")
+
+                customtkinter.CTkLabel(master=frame_details, text=f"{last_name}, {name}", font=('Arial', 16, 'bold')).grid(row=0, column=0, columnspan=2, sticky='w', padx=10, pady=5)
+
+                details_keys = ['Age', 'Years Before Retirement', 'Monthly Income', 'Monthly Expenses', 'Total Investments Value']
+
+                details_labels = {}
+                details_entries = {}
+
+                for i, key in enumerate(details_keys, start=1):
+                    label = customtkinter.CTkLabel(master=frame_details, text=f"{key}: {person_details[2 + i - 1]}")
+                    label.grid(row=i, column=0, padx=10, pady=5)
+                    details_labels[key] = label
+
+                    entry = customtkinter.CTkEntry(master=frame_details)
+                    entry.insert(0, person_details[2 + i - 1])
+                    details_entries[key] = entry
+
+                def switch_to_edit_mode():
+                    for key, label in details_labels.items():
+                        label.grid_forget()
+                        details_entries[key].grid(row=details_keys.index(key) + 1, column=1, padx=10, pady=5)
+
+                    save_button.grid(row=6, column=0, columnspan=2)
+                    edit_button.grid_forget()
+
+                def save_edits():
+                    new_details = {
+                        key: details_entries[key].get() for key in details_keys
+                    }
+
+                    # Update database
+                    conn = sqlite3.connect('users.db')
+                    c = conn.cursor()
+                    c.execute("""
+                        UPDATE Retirement_Plan 
+                        SET Age = ?, Years_Before_Retirement = ?, Monthly_Income = ?, Monthly_Expenses = ?, Total_Investments_Value = ?
+                        WHERE Last_Name = ? AND Name = ?""",
+                        (new_details['Age'], new_details['Years Before Retirement'], new_details['Monthly Income'],
+                        new_details['Monthly Expenses'], new_details['Total Investments Value'], last_name, name))
+                    conn.commit()
+                    conn.close()
+
+                    # Switch back to label mode
+                    for key, entry in details_entries.items():
+                        entry.grid_forget()
+                        details_labels[key].configure(text=f"{key}: {new_details[key]}")
+                        details_labels[key].grid(row=details_keys.index(key) + 1, column=0, padx=10, pady=5)
+
+                    edit_button.grid(row=6, column=0, columnspan=2)
+                    save_button.grid_forget()
+
+                edit_button = customtkinter.CTkButton(master=frame_details, text="Edit", command=switch_to_edit_mode)
+                edit_button.grid(row=6, column=0, columnspan=2)
+
+                save_button = customtkinter.CTkButton(master=frame_details, text="Save", command=save_edits)
+
+                frame_details.mainloop()
+
+            # Bind selection event
+            names_listbox.bind('<<ListboxSelect>>', on_name_selected)
+
+            frame_view_names.mainloop()
+
+
+
+        def view_portfolio_person():
+            print("Portfolio of a person selected")
+            # Implement the action to view the portfolio of a person
+            # For example, you can retrieve the data from the database and display it.
+            pass
+
+        button_statement_policy = customtkinter.CTkButton(
+            master=frame_view_existent_portfolio, text='View Statement Policy', command=view_statement_policy)
+        button_statement_policy.pack(pady=10, padx=10)
+
+        button_portfolio_person = customtkinter.CTkButton(
+            master=frame_view_existent_portfolio, text='View Portfolio of a Person', command=view_portfolio_person)
+        button_portfolio_person.pack(pady=10, padx=10)
+
+        frame_view_existent_portfolio.mainloop()
+        
 
     button__new_portfolio = customtkinter.CTkButton(
         master=frame_building_a_portfolio_0, text='New Portfolio', command=building_new_portfolio)
