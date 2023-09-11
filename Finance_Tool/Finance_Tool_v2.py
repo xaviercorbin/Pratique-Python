@@ -28,7 +28,7 @@ def historic_prices():
     print("------User have selected : Historic Price------")
     frame_historic_prices = customtkinter.CTk()
     frame_historic_prices.title('Historic Price')
-    frame_historic_prices.geometry("600x200")
+    frame_historic_prices.geometry("550x150")
     option_var = customtkinter.StringVar(value='1mo')
 
     def period_option_menu(choice):
