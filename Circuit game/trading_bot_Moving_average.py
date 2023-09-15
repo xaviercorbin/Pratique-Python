@@ -148,6 +148,10 @@ def plot_data(ticker, data):
     plt.ylabel(f'{ticker} Close Price')
     plt.legend(loc='best')
     
+    # plot moving average
+    plt.plot(data['SMA10'], label='SMA10', alpha=0.5, color='blue')
+    plt.plot(data['SMA45'], label='SMA45', alpha=0.5, color='red')
+    
 
 
 def main():
