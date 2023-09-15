@@ -9,9 +9,9 @@ from sklearn.model_selection import train_test_split
 from statsmodels.tsa.arima.model import ARIMA
 
 # Constants
-CAPITAL = 1000
-RISK_PER_TRADE = 0.05
-STOP_LOSS = 0.02
+CAPITAL = 100
+RISK_PER_TRADE = 0.8
+STOP_LOSS = 0.01
 TAKE_PROFIT = 0.05
 
 # Helper Functions
@@ -46,10 +46,6 @@ def RSI(data, window):
     data['RSI'] = rsi
     return data
 
-def compute_momentum(data, period=15):
-    data['Momentum'] = (data['Close'] - data['Close'].shift(period)) / data['Close'].shift(period) * 100
-    return data
-
 
 def compute_trade_results(data):
     results = [np.nan] * len(data)
@@ -78,10 +74,7 @@ def trading_strategy_risk_managed(data, model):
             next_close_prediction = None
 
         if position:
-            # Modified this sell condition to check for negative momentum as well
-            if (data['Close'].iloc[i] <= position['stop_loss'] or 
-               data['Close'].iloc[i] >= position['take_profit'] or 
-               data['Momentum'].iloc[i] < 0):  # Momentum check
+            if data['Close'].iloc[i] <= position['stop_loss'] or data['Close'].iloc[i] >= position['take_profit']:
                 sell_signals.append(data['Close'].iloc[i])
                 buy_signals.append(np.nan)
                 position = None
@@ -90,11 +83,7 @@ def trading_strategy_risk_managed(data, model):
                 sell_signals.append(np.nan)
             stop_loss_levels.append(np.nan)
             take_profit_levels.append(np.nan)
-        # Modified this buy condition to check for positive momentum as well
-        elif (next_close_prediction and 
-              next_close_prediction > data['Close'].iloc[i] and 
-              data['RSI'].iloc[i] < 30 and 
-              data['Momentum'].iloc[i] > 0):  # Momentum check
+        elif next_close_prediction and next_close_prediction > data['Close'].iloc[i] and data['RSI'].iloc[i] < 30:
             size = position_size(data['Close'].iloc[i])
             position = {
                 'price': data['Close'].iloc[i],
@@ -120,7 +109,6 @@ def trading_strategy_risk_managed(data, model):
     return buy_signals, sell_signals, stop_loss_levels, take_profit_levels
 
 
-
 def fit_arima_model(y_train):
     model = ARIMA(y_train, order=(5,1,0))
     model_fit = model.fit()
@@ -143,7 +131,6 @@ def preprocess_data(data):
     data['Prev_Close2'] = data['Close'].shift(2)
     data['Prev_Volume1'] = data['Volume'].shift(1)
     data.dropna(inplace=True)
-    data = compute_momentum(data)
     return data
 
 def plot_data(ticker, data):
@@ -160,20 +147,13 @@ def plot_data(ticker, data):
     plt.xlabel('Date')
     plt.ylabel(f'{ticker} Close Price')
     plt.legend(loc='best')
-    plt.plot(data['Momentum'], label='Momentum', alpha=0.5, linestyle='--', color='purple')
-    plt.show()
-
-def compute_final_balance(data):
-    start_balance = CAPITAL
-    trade_results = data['Trade_Results'].dropna()
-    end_balance = start_balance + start_balance * trade_results.sum()
     
-    return start_balance, end_balance
+
 
 def main():
     ticker = prompt_for_ticker()
 
-    start_date = datetime.datetime(2020, 1, 1)
+    start_date = datetime.datetime(2012, 1, 1)
     end_date = datetime.datetime.now()
     data = get_data(ticker, start_date, end_date)
     data.index = pd.DatetimeIndex(data.index).to_period('D')  # Setting frequency to daily
@@ -199,11 +179,12 @@ def main():
     trade_results = data['Trade_Results'].dropna()
     end_balance = start_balance + start_balance * trade_results.sum()
 
-    print(data)
-    print(data.tail())
+    #print(data)
+    #print(data.tail())
     
     print(f"Start Balance: ${start_balance:.2f}")
     print(f"End Balance: ${end_balance:.2f}")
+    plt.show()
 
 if __name__ == "__main__":
     main()
