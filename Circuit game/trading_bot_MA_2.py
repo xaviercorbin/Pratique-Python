@@ -137,7 +137,7 @@ def plot_stock_data(ticker, data):
 
 def main():
     ticker = input("Enter the stock ticker (e.g. AAPL): ")
-    start_date = datetime.datetime(2020, 1, 1)
+    start_date = datetime.datetime(2022, 1, 1)
     end_date = datetime.datetime.now()
     years = (end_date - start_date).days / 365.25  # Calculate number of years, accounting for leap years
 
