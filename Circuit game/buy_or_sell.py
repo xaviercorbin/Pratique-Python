@@ -3,9 +3,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import yfinance as yf
+from tkinter import *
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg  # Import FigureCanvasTkAgg
+from tabulate import tabulate
 
 BALANCE_FILE = 'balance.txt'
 CAPITAL = 3000
+
+# Initialize global variables for navigation through graphs
+current_stock_index = 0
+stocks_data = []
+table_data = []
 
 def fetch_stock_data(ticker, start_date, end_date):
     """Fetches stock data for the given ticker and dates."""
@@ -57,6 +65,9 @@ def calculate_yoy_return(start_balance, end_balance):
 
 def get_latest_signal(ticker, data):
     """Returns the latest signal (Buy, Sell, or None) for the provided stock data."""
+    #print("Buy Signal for last row:", data['Buy_Signal'].iloc[-1])
+    #print("Sell Signal for last row:", data['Sell_Signal'].iloc[-1])
+    
     if data['Buy_Signal'].iloc[-1] > 0:
         return "Buy"
     elif data['Sell_Signal'].iloc[-1] > 0:
@@ -130,9 +141,12 @@ def display_trades(trades):
               f"Shares: {trade['Shares']}]-> Trade Return: ${trade['Trade_Return']:.2f} -> "
               f"Balance After Trade: ${trade['Balance_After_Trade']:.2f}\n")
 
-def plot_stock_data(ticker, data):
+def plot_stock_data(ticker, data, canvas=None):
     """Plots stock data with buy/sell signals."""
-    plt.figure(figsize=(12, 6))
+    if canvas:  # If canvas is provided, clear the current figure
+        plt.figure(canvas.figure.number)  # This line was changed
+    else:  # Otherwise, create a new figure
+        plt.figure(figsize=(12, 6))
     plt.plot(data['Close'], label='Close Price', alpha=0.5)
     plt.scatter(data.index, data['Buy_Signal'], color='green', marker='^', label='Buy Signal', alpha=1)
     plt.scatter(data.index, data['Sell_Signal'], color='red', marker='v', label='Sell Signal', alpha=1)
@@ -142,7 +156,25 @@ def plot_stock_data(ticker, data):
     plt.xlabel('Date')
     plt.ylabel(f'{ticker} Close Price')
     plt.legend(loc='best')
-    plt.show()
+    if canvas:
+        canvas.draw()
+    else:
+        plt.show()
+
+
+def next_stock(canvas):
+    global current_stock_index
+    current_stock_index = (current_stock_index + 1) % len(stocks_data)
+    ticker, data, _ = stocks_data[current_stock_index]
+    plot_stock_data(ticker, data, canvas)
+
+def prev_stock(canvas):
+    global current_stock_index
+    current_stock_index = (current_stock_index - 1) % len(stocks_data)
+    ticker, data, _ = stocks_data[current_stock_index]
+    plot_stock_data(ticker, data, canvas)
+
+
 
 def main():
     tickers = input("Enter the stock tickers separated by commas (e.g. AAPL,MSFT,GOOGL): ").split(",")
@@ -151,9 +183,11 @@ def main():
 
     stocks_to_buy = []
     stocks_to_sell = []
+    
+    global stocks_data, table_data
 
     for ticker in tickers:
-        ticker = ticker.strip()  # Removing any leading or trailing spaces
+        ticker = ticker.strip()
         data = fetch_stock_data(ticker, start_date, end_date)
         if data is None:
             continue
@@ -161,22 +195,43 @@ def main():
         data = compute_signals(data)
         latest_signal = get_latest_signal(ticker, data)
 
+        trades, _, _ = compute_trade_performance(data)
+        stocks_data.append((ticker, data, trades))
+
         if latest_signal == "Buy":
             stocks_to_buy.append(ticker)
         elif latest_signal == "Sell":
             stocks_to_sell.append(ticker)
 
-        plot_stock_data(ticker, data)  # Optional: Comment this line if you don't want to plot data for each stock
+    # Create the main GUI window
+    root = Tk()
+    root.title("Stock Analysis")
 
-    print('---------------------------------------------------------------')
-    print('Stocks with BUY signal:')
-    for stock in stocks_to_buy:
-        print(stock)
+    # Create navigation buttons
+    prev_button = Button(root, text="Previous", command=lambda: prev_stock(canvas))
+    prev_button.pack(side=LEFT)
 
-    print('---------------------------------------------------------------')
-    print('Stocks with SELL signal:')
-    for stock in stocks_to_sell:
-        print(stock)
+    next_button = Button(root, text="Next", command=lambda: next_stock(canvas))
+    next_button.pack(side=RIGHT)
+
+    # Create a canvas for displaying graphs
+    canvas = FigureCanvasTkAgg(plt.figure(figsize=(12, 6)), master=root)
+    canvas.get_tk_widget().pack()
+
+    # Initial plot
+    ticker, data, _ = stocks_data[current_stock_index]
+    plot_stock_data(ticker, data, canvas)
+
+    # Display stock table in the terminal
+    table_data = []
+    for ticker, data, trades in stocks_data:
+        latest_signal = get_latest_signal(ticker, data)
+        table_data.append([ticker, data['Close'][-1], len(trades), latest_signal])
+
+    table_headers = ["Ticker", "Price", "Number of Shares", "Signal"]
+    print(tabulate(table_data, headers=table_headers, tablefmt="pretty"))
+
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
