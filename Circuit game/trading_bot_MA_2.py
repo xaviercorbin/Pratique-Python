@@ -11,8 +11,6 @@ from fetch_market_return import \
 from fetch_market_return import fetch_market_data, market_annualized_return
 from matplotlib.widgets import Button
 
-%%time
-
 # Constants
 BALANCE_FILE = 'balance.txt'
 CAPITAL = 1000.0
