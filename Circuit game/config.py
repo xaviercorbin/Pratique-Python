@@ -1,2 +1,2 @@
 # config.py
-date_start = (2000, 1, 1)
+date_start = (2020, 1, 1)

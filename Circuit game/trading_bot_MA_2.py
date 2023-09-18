@@ -258,7 +258,8 @@ def main():
     alpha = round((((annualized_return * 100) - RISKFREERATE)) -
                   beta_of_the_stock * (market_annualized_return_final - RISKFREERATE), 2)
 
-    print(f"Ticker: {ticker}")
+    print('---------------------------------------------------------------')
+    print(f"TICKER: {ticker.upper()}, for the period: {start_date} - Today")
     print('---------------------------------------------------------------')
     print(f"Start Balance: ${CAPITAL:.2f}")
     print(f"End Balance: ${end_balance:.2f}")
@@ -267,7 +268,7 @@ def main():
     print(f"Total number of trade: {number_of_trade}")
     print('---------------------------------------------------------------')
     print(f"Annualized Return: {annualized_return * 100:.2f}%")
-    print(f"YoY Return: {yoy_return * 100:.2f}%")
+    print(f"Total Return: {yoy_return * 100:.2f}%")
     print(f"Number of years: {years}")
     print(f"Market (SPY) Annualized Return: {market_annualized_return_final}%")
     print('---------------------------------------------------------------')
