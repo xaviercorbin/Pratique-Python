@@ -1,12 +1,14 @@
 import datetime
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import yfinance as yf
-from matplotlib.widgets import Button
 from config import date_start
-from fetch_market_return import fetch_market_data, compute_daily_returns as compute_market_daily_returns, market_annualized_return
-
+from fetch_market_return import \
+    compute_daily_returns as compute_market_daily_returns
+from fetch_market_return import fetch_market_data, market_annualized_return
+from matplotlib.widgets import Button
 
 BALANCE_FILE = 'balance.txt'
 CAPITAL = 1000
@@ -36,6 +38,12 @@ def compute_daily_returns(data):
     """Computes daily returns based on close prices."""
     data['Daily_Returns'] = data['Close'].pct_change()
     return data
+
+def compute_beta_stock(stock_returns, market_returns):
+    covariance = stock_returns.cov(market_returns)
+    variance = market_returns.var()
+    beta_stock = covariance / variance
+    return beta_stock
 
 def save_balance_to_file(balance):
     """Saves the balance to a txt file."""
@@ -214,6 +222,8 @@ def main():
     daily_returns = data['Daily_Returns'].dropna()
     s_ratio = sharpe_ratio(daily_returns)  # Portfolio's Sharpe Ratio
     t_ratio = treynor_ratio(daily_returns, market_daily_returns)  # We now need the market returns for Treynor Ratio
+    beta_of_the_stock = compute_beta_stock(daily_returns, market_daily_returns)
+    alpha = round((((annualized_return * 100) - RISKFREERATE)) - beta_of_the_stock * (market_annualized_return_final - RISKFREERATE),2)
 
 
     print('---------------------------------------------------------------')
@@ -221,7 +231,7 @@ def main():
     print(f"End Balance: ${end_balance:.2f}")
     print('---------------------------------------------------------------')
     print(f"Total commissions payed: ${commissions:.2f}")
-    print(f"Total number of trade: {number_of_trade:.2f}")
+    print(f"Total number of trade: {number_of_trade}")
     print('---------------------------------------------------------------')
     print(f"Annualized Return: {annualized_return * 100:.2f}%")
     print(f"YoY Return: {yoy_return * 100:.2f}%")
@@ -230,6 +240,7 @@ def main():
     print('---------------------------------------------------------------')
     print(f"Sharpe Ratio: {s_ratio:.4f}")
     print(f"Treynor Ratio: {t_ratio:.4f}")
+    print(f"Alpha : {alpha}")
     print('---------------------------------------------------------------')
 
     plot_stock_data(ticker, data)
