@@ -20,6 +20,9 @@ RISKFREERATE = 0.0531
 TRADING_DAYS = 252
 
 
+# ADD THE MACD TO HAVE A BETTER PREDICTION ON THE PRICE MOVEMENTS MACD(12,26,9)
+
+
 def fetch_stock_data(ticker: str, start_date: datetime.datetime, end_date: datetime.datetime) -> Optional[pd.DataFrame]:
     """Fetches stock data for the given ticker and dates."""
     try:
