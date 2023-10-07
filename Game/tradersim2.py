@@ -114,7 +114,7 @@ money_label = customtkinter.CTkLabel(master=homepage, text="$" + str(money), fon
 money_label.grid(row=0, column=0, columnspan=2)
 
 #Energy Available
-energy_label = customtkinter.CTkLabel(master=homepage, text=str(energy) + "/100", font=("Arial",12))
+energy_label = customtkinter.CTkLabel(master=homepage, text="⚡" +str(energy) + "/100", font=("Arial",12))
 energy_label.grid(row=1, column=0, columnspan=2)
 
 #END DAY BUTTON
@@ -122,15 +122,15 @@ end_day_button = customtkinter.CTkButton(master=homepage, text='END DAY', comman
 end_day_button.grid(row=0,column=4, sticky='W', padx=2)
 
 #Transfer Money Button
-transfer_money_button = customtkinter.CTkButton(master=homepage, text='+', command=transfer_money)
+transfer_money_button = customtkinter.CTkButton(master=homepage, text='➕', command=transfer_money)
 transfer_money_button.grid(row=5, column=2, sticky='W', padx=2)
 
 #Performance Button
-performance_button = customtkinter.CTkButton(master=homepage, text='Performance', command=performance)
+performance_button = customtkinter.CTkButton(master=homepage, text='📈', command=performance)
 performance_button.grid(row=5, column=3, sticky='W', padx=2)
 
 #Market Button
-markets_button = customtkinter.CTkButton(master=homepage, text='Market', command=markets)
+markets_button = customtkinter.CTkButton(master=homepage, text='🔍', command=markets)
 markets_button.grid(row=5, column=4, sticky='W', padx=2)
 
 #Portfolio Value
@@ -150,23 +150,23 @@ today_change_label.grid(row=6, column=0, sticky='W')
 
 
 #Homepage Button
-home_page_button = customtkinter.CTkButton(master=homepage, text='Home', command=home_page)
+home_page_button = customtkinter.CTkButton(master=homepage, text='💲', command=home_page)
 home_page_button.grid(row=9, column=0, sticky='W', padx=2)
 
 #Bonuses Button
-bonus_page_button = customtkinter.CTkButton(master=homepage, text='Bonus', command=bonus)
+bonus_page_button = customtkinter.CTkButton(master=homepage, text='👤', command=bonus)
 bonus_page_button.grid(row=9, column=1, sticky='W', padx=2)
 
 #Finances button
-finance_page_button = customtkinter.CTkButton(master=homepage, text='Finances', command=finances)
+finance_page_button = customtkinter.CTkButton(master=homepage, text='📊', command=finances)
 finance_page_button.grid(row=9, column=2, sticky='W', padx=2)
 
 #Lifestyle Button
-lifestyle_page_button = customtkinter.CTkButton(master=homepage, text='Lifestyle', command=lifestyle)
+lifestyle_page_button = customtkinter.CTkButton(master=homepage, text='🏠', command=lifestyle)
 lifestyle_page_button.grid(row=9, column=3, sticky='W', padx=2)
 
 #Cheats Button
-cheats_page_button = customtkinter.CTkButton(master=homepage, text='Cheats', command=cheats)
+cheats_page_button = customtkinter.CTkButton(master=homepage, text='🎛️', command=cheats)
 cheats_page_button.grid(row=9, column=4, sticky='W', padx=2)
 
 

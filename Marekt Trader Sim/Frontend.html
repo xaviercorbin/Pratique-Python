@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid #333;
+            background-color: #242424;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .date {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .portfolio {
+            padding: 20px 40px;
+            border-bottom: 1px solid #333;
+            background-color: #242424;
+        }
+
+        .portfolio-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .graph {
+            padding: 20px 40px;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            background-color: #242424;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 5px 40px;
+            background-color: #242424;
+        }
+    </style>
+</head>
+<body>
+    <div id="mainPage">
+        <div class="header">
+            <div>
+                <span>Bank: </span>$500,000
+            </div>
+            <div>
+                <span>⚡ </span>1911 / 2355
+            </div>
+            <button class="btn">END DAY</button>
+        </div>
+    
+        <div class="date">
+            Sunday, Dec 22, 2047
+        </div>
+    
+        <div class="portfolio">
+            <h2>Portfolio</h2>
+            <div class="portfolio-content">
+                <div>
+                    <span>Value: </span>$3,736,559,554.02<br>
+                    <span>Change: </span>$1,995,684.85 (0.05%) Today - Market Closed
+                </div>
+                <div>
+                    <button class="btn">➕</button>
+                    <button class="btn">📈</button>
+                    <button class="btn">🔍</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="graph">
+            <h3>Portfolio Performance</h3>
+            <div id="performanceGraph">
+                <!-- Graph will be displayed here -->
+            </div>
+        </div>
+    
+        <div class="stocks">
+            <h3>Owned Stocks</h3>
+            <ul>
+                <li>Stock A - Quantity: 100</li>
+                <li>Stock B - Quantity: 50</li>
+            </ul>
+        </div>
+    </div>
+    
+</body>
+
+<footer class="footer">
+    <button class="btn">💲</button>
+    <button class="btn" onclick="switchPage('main')">💲</button>
+    <button class="btn" onclick="switchPage('talent')">👤</button>
+    <button class="btn">🏠</button>
+    <button class="btn">🎛️</button>
+</footer>
+</html>
