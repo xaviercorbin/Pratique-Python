@@ -15,7 +15,7 @@ homepage = customtkinter.CTk()
 homepage.title("TRADER")
 homepage.attributes('-fullscreen', True) 
 
-current_date = date(2023, 1, 1)
+current_date = date(2011, 1, 3)
 
 # Update money value
 def update_money_label():
