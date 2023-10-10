@@ -164,7 +164,10 @@ def performance():
 
 
 def markets():
-    print('Markets window open')
+    print('Markets Window Open')
+    markets_frame = customtkinter.ctk()
+    markets_frame.title('Market View')
+    
     
     
 
@@ -225,6 +228,7 @@ dollar_change = 0
 percentage_change = 0
 
 # Variable qui change avec le temps
+nom = 'Connor Corbin'
 age = 43
 source_of_wealth = 'Self Made, Investments, Hedge Funds, Venture'
 self_made_score = 8
