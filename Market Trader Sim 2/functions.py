@@ -1,32 +1,9 @@
-# Standard Library imports
-import random
-from datetime import date, datetime, timedelta
-import sqlite3
+# functions.py
 
-# Third-party imports
-import customtkinter
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from imports import *
+from globals import *
 
-# Tkinter related imports
-import tkinter as tk
-from tkinter import ttk, IntVar, Canvas
-
-
-print('Game started')
-
-customtkinter.set_appearance_mode('dark')
-customtkinter.set_default_color_theme('green')
-
-homepage = customtkinter.CTk()
-homepage.title("TRADER")
-homepage.attributes('-fullscreen', True)
-
-current_date = date(2011, 1, 3)
-
-# Update money value
-
-
+# ... (all the function definitions go here)
 def update_money_label():
     money_label['text'] = "$" + "{:,}".format(money)
 
@@ -240,78 +217,12 @@ def cheats():
     close_button.grid(row=0, column=0, padx=10, pady=10)
 
     cheats_frame.mainloop()
-
-
-# Variables
-money = 93528973
-portfolio_value = 3736405124
-energy = 2355
-dollar_change = 0
-percentage_change = 0
-
-formatted_date = current_date.strftime("%A, %b %d, %Y")
-
+    
+    
+    
 # Set weights for rows and columns to expand them as necessary
 for i in range(6):
     homepage.rowconfigure(i, weight=1)
 
 for i in range(5):
     homepage.columnconfigure(i, weight=1)
-
-# Upper header
-money_label = customtkinter.CTkLabel(
-    master=homepage, text="$" + "{:,}".format(money), font=("Arial", 55), anchor='w', width=15)
-money_label.grid(row=0, column=0, columnspan=3,
-                 sticky='w', padx=(100, 0), pady=(40, 20))
-
-energy_label = customtkinter.CTkLabel(
-    master=homepage, text="⚡" + str(energy) + "/2355", font=("Arial", 20), anchor='w')
-energy_label.grid(row=1, column=0, sticky='w', padx=(100, 0), pady=(0, 40))
-
-day_label = customtkinter.CTkLabel(
-    master=homepage, text=formatted_date, font=("Arial", 20), anchor='w')
-day_label.grid(row=1, columnspan=2, column=3,
-               sticky='w', padx=(100, 0), pady=(0, 40))
-
-end_day_button = customtkinter.CTkButton(master=homepage, text='END DAY', font=(
-    "Arial", 25), width=12, command=advance_day)
-end_day_button.grid(row=0, rowspan=2, column=4,  columnspan=1,
-                    sticky='E', padx=(0, 100), pady=(40, 40))
-
-# Portfolio section
-portfolio_label = customtkinter.CTkLabel(
-    master=homepage, text="Portfolio", font=('Arial', 40), anchor='w')
-portfolio_label.grid(row=2, column=0, sticky='w', padx=(100, 0), pady=(40, 20))
-
-portfolio_value_label = customtkinter.CTkLabel(
-    master=homepage, text="$" + "{:,}".format(portfolio_value), font=('Arial', 35), anchor='w', width=25)
-portfolio_value_label.grid(row=3, column=0, sticky='w', padx=(100, 0))
-
-today_change_label = customtkinter.CTkLabel(
-    master=homepage, text=f"{dollar_change} | {percentage_change} Today", font=("Arial", 20), anchor='w')
-today_change_label.grid(row=4, column=0, sticky='w',
-                        padx=(100, 0), pady=(40, 40))
-
-transfer_money_button = customtkinter.CTkButton(
-    master=homepage, text='➕', font=("Arial", 24), width=12, command=transfer_money)
-transfer_money_button.grid(row=3, column=2, sticky='E',
-                           padx=(0, 100), pady=(40, 40))
-
-performance_button = customtkinter.CTkButton(
-    master=homepage, text='📈', font=("Arial", 24), width=12, command=performance)
-performance_button.grid(row=3, column=3, sticky='E',
-                        padx=(0, 100), pady=(40, 40))
-
-markets_button = customtkinter.CTkButton(
-    master=homepage, text='🔍', font=("Arial", 24), width=12, command=markets)
-markets_button.grid(row=3, column=4, sticky='E', padx=(0, 100), pady=(40, 40))
-
-# Bottom buttons
-icons = [('💲', home_page), ('👤', bonus), ('📊', finances),
-         ('🏠', lifestyle), ('🎛️', cheats)]
-for idx, (icon, cmd) in enumerate(icons):
-    btn = customtkinter.CTkButton(
-        master=homepage, text=icon, command=cmd, font=("Arial", 28), width=6)
-    btn.grid(row=5, column=idx, padx=(100, 100), pady=(40, 20))
-
-homepage.mainloop()
