@@ -20,13 +20,42 @@ customtkinter.set_default_color_theme('green')
 
 homepage = customtkinter.CTk()
 homepage.title("TRADER")
-homepage.attributes('-fullscreen', True)
+homepage.attributes('-fullscreen', False)
+homepage.geometry("1430x1500")
 
 current_date = date(2011, 1, 3)
 
+# Create a SQLite database connection
+conn = sqlite3.connect('trader.db')
+cursor = conn.cursor()
+
+# Define a function for deposit and withdraw operations
+def perform_transaction(amount, is_deposit=True):
+    global money, portfolio_value
+    if is_deposit:
+        portfolio_value += amount
+        money -= amount
+    else:
+        if amount > portfolio_value:
+            print("Cannot withdraw. Exceeds portfolio value.")
+            return
+        portfolio_value -= amount
+        money += amount
+    update_money_label()
+    update_portfolio_value_label()
+    conn.execute(f"INSERT INTO transactions (amount, is_deposit) VALUES ({amount}, {is_deposit})")
+    conn.commit()
+
+# Create a function to update money label
+def update_money_label():
+    money_label['text'] = "$" + "{:,}".format(money)
+
+# Create a function to update portfolio value label
+def update_portfolio_value_label():
+    portfolio_value_label['text'] = "$" + "{:,}".format(portfolio_value)
+
+
 # Update money value
-
-
 def update_money_label():
     money_label['text'] = "$" + "{:,}".format(money)
 
@@ -43,6 +72,8 @@ def advance_day():
     current_date = current_date + timedelta(days=1)
     formatted_date = current_date.strftime("%A, %b %d, %Y")
     day_label.configure(text=formatted_date)
+    money_label['text'] = "$" + "{:,}".format(money)
+    portfolio_value_label['text'] = "$" + "{:,}".format(portfolio_value)
 
 # Fonction transfer money
 
@@ -53,6 +84,7 @@ def deposit():
     print("Depositing money")
     deposit_frame = customtkinter.CTk()
     deposit_frame.title("Deposit Money")
+    deposit_frame.geometry("1430x1500")
 
     def finalize_deposit():
         global portfolio_value, money
@@ -105,6 +137,7 @@ def withdraw():
     print("Withdrawing money")
     withdraw_frame = customtkinter.CTk()
     withdraw_frame.title("Withdraw Money")
+    withdraw_frame.geometry("1430x1500")
 
     def finalize_withdraw():
         print('Finalized withdraw')
@@ -157,6 +190,7 @@ def transfer_money():
 
     transfer_money_frame = customtkinter.CTk()
     transfer_money_frame.title("Transfer Money")
+    transfer_money_frame.geometry("1430x1500")
 
     # Creating Deposit button
     deposit_button = customtkinter.CTkButton(
@@ -185,6 +219,7 @@ def markets():
     print('Markets Window Open')
     markets_frame = customtkinter.ctk()
     markets_frame.title('Market View')
+    markets_frame.geometry("1430x1500")
     
     markets_frame.mainloop()
 
@@ -223,6 +258,7 @@ def lifestyle():
 def close_game():
     print('Game closed')
     # Make a saving method here if needed
+    conn.close()
     quit()
 
 # Function for cheats
@@ -233,6 +269,7 @@ def cheats():
 
     cheats_frame = customtkinter.CTk()
     cheats_frame.title("Cheats Window")
+    cheats_frame.geometry("1430x1500")
 
     close_button = customtkinter.CTkButton(master=cheats_frame, text='Close the Game', font=(
         "Arial", 20), width=10, command=close_game)
