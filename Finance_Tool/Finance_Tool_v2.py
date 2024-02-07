@@ -180,6 +180,10 @@ def historic_prices():
     frame_historic_prices.mainloop()
 
 
+def view_current_portfolio():
+    """View current portfolio"""
+    frame_portfolio.view = customtkinter.CTk()
+    
 def calculation_of_shares_to_buy():
     print('------alculation of shares to buy selected------')
 
